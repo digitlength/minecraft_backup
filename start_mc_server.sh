@@ -31,7 +31,7 @@ echo "Starting Minecraft Server..."
 
 # Start the server, reading from  $MCPIPENAME instead of standard in
 # This command is really complex...full explanation at the end
-java -Xmx${HEAPMEM} -Xms${HEAPMEM} -jar $SERVPATH/$JARNAME go <> $MCPIPE > >(tee $OUTFILE) &
+java -Xmx${HEAPMEM} -Xms${HEAPMEM} -jar $SERVPATH/$JARNAME $STARTCOMMAND <> $MCPIPE > >(tee $OUTFILE) &
 
 # Record the PID of this process so that systemd can track it, then fork
 SERVER_PID=$!

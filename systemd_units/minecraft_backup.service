@@ -1,0 +1,6 @@
+[Unit]
+Description=Minecraft Server
+
+[Service]
+Type=simple
+ExecStart=/opt/Minecraft/scripts/make_backup.sh --regular

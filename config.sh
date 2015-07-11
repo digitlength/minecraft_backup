@@ -16,7 +16,7 @@ SERVPATH=/opt/Minecraft
 JARNAME="sponge-1.8-1446-2.1DEV-512.jar"
 
 # The location of the backup directory
-BKUPNAME="auto_backups"
+BKUPNAME="backups"
 
 # How much memory to assign to the JVM heap
 # See -Xmx in the java manpage for syntax details
@@ -29,6 +29,11 @@ OUTFILENAME=server.out
 # The name for the server input file. This named pipe
 # will be used to send console input to the server
 PIPENAME=minecraft_IO.pipe
+
+# The command used to run the Minecraft server. For sponge, it is 'go'
+# For vanilla Minecraft servers, the command is 'nogui'
+STARTCOMMAND=go
+# STARTCOMMAND=nogui
 
 #############################################################################
 ####################### DO NOT EDIT BELOW THIS BANNER #######################
