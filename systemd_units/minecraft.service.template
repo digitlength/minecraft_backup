@@ -4,7 +4,7 @@ Description=Minecraft Server
 [Service]
 Type=forking
 PIDFile=/var/run/minecraft.pid
-ExecStart=/opt/Minecraft/scripts/start_mc_server.sh &
+ExecStart=SCRIPTDIR/start_mc_server.sh &
 Restart=on-abort
 
 [Install]

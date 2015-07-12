@@ -33,6 +33,7 @@ source $THIS_DIR/config.sh
 # Set up important variables
 TIMESTAMP=$(date +%H%M)
 DATESTAMP=$(date +%Y%m%d)
+IDENTSTAMP=${DATESTAMP}${TIMESTAMP}
 PROPERTIES="server.properties"
 
 # Get world name from server properties
@@ -47,7 +48,7 @@ done < "$SERVPATH/$PROPERTIES"
 
 #Set target backup directory
 if [ "$CUSTOM_BKUP" = "FALSE" ]; then
-  TARGET_DIR="$BKUPDIR/regular/$DATESTAMP/$TIMESTAMP"
+  TARGET_DIR="$BKUPDIR/hourly/$DATESTAMP/$TIMESTAMP"
 else
   TARGET_DIR="$BKUPDIR/custom/$1"
 fi
@@ -80,12 +81,12 @@ go run waitsilence.go -timeout 5s -command "$WAITCMD"    # -verbose true #option
 
 cd $SERVPATH
 
-tar -czf $TARGET_DIR/${WORLD}.tar.gz $WORLD
+tar -czf $TARGET_DIR/${WORLD}.${IDENTSTAMP}tar.gz $WORLD
 if [ -f "${WORLD}_nether" ]; then
-  tar -czf $TARGET_DIR/${WORLD}_nether.tar.gz ${WORLD}_nether
+  tar -czf $TARGET_DIR/${WORLD}_nether.${IDENTSTAMP}.tar.gz ${WORLD}_nether
 fi
 if [ -f "${WORLD}_the_end" ]; then
-  tar -czf $TARGET_DIR/${WORLD}_the_end.tar.gz ${WORLD}_the_end
+  tar -czf $TARGET_DIR/${WORLD}_the_end.${IDENTSTAMP}.tar.gz ${WORLD}_the_end
 fi
 
 # Backups are done. Turn saves back on and notify the server
