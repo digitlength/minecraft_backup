@@ -7,8 +7,13 @@
 ## which is named and will not be touched by the cleanup script.
 
 if [[ "$1" != "--regular" && "$1" = -* ]] || [[ "$1" = "" ]]; then
-  echo "Usage: $0 backupname   OR  Usage: $0 --regular"
-  echo "Backup names cannot start with a dash"
+  echo "Usage: $0 backupname"
+  echo "\t Creates a custom backup using the name provided"
+  echo "\t Custom backups are never deleted by the backup pruner."
+  echo "\t Custom names cannot start with a dash (-)"
+  echo "Usage: $0 backupname --regular"
+  echo "\t Creates a regular backup, using a timestamped name."
+  echo "\t Timestamped names may be removed by the pruner."
   exit 1
 fi
 
@@ -67,7 +72,7 @@ fi
 echo "save-all" > $MCPIPE
 echo "save-off" > $MCPIPE
 
-# use inotifywait and waitsilence to make sure server is done writing 
+# use inotifywait and waitsilence to make sure server is done writing
 # inotifywait watches for access to the folder, waitsilence will wait
 # until it has no input for `timeout` seconds before continuing. We
 # wait for 5s to be sure the server is done saving the world

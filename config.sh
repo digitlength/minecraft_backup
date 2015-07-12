@@ -19,6 +19,11 @@ SERVPATH=/opt/Minecraft
 # The name of the minecraft server JARfile
 JARNAME="sponge-1.8-1446-2.1DEV-512.jar"
 
+# The command used to run the Minecraft server. For sponge, it is 'go'
+# For vanilla Minecraft servers, the command is 'nogui'
+STARTCOMMAND=go
+# STARTCOMMAND=nogui
+
 # The location of the backup directory
 BKUPNAME="backups"
 
@@ -33,11 +38,6 @@ OUTFILENAME=mc_server.log
 # The name for the server input file. This named pipe
 # will be used to send console input to the server
 PIPENAME=minecraft_IO.pipe
-
-# The command used to run the Minecraft server. For sponge, it is 'go'
-# For vanilla Minecraft servers, the command is 'nogui'
-STARTCOMMAND=go
-# STARTCOMMAND=nogui
 
 ##########################
 ##### Backup Options #####
