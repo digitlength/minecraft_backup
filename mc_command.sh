@@ -29,8 +29,17 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-# Note: cannot be executed correctly if a minecraft server is already running.
-# To search for running MC server, run `ps aux | grep java`
+## This script will take the backups in BKUPDIR and prume
+## them appropriately. It retains two days' worth of hourly
+## backup (NOT 48 hrs!), 7 days' worth of weekly backup, and
+## up to 6 months of weekly backups, though this can be
+## reconfigured in config.sh. See the comments there for what
+## the numbers all mean.
+
+
+# If we can't find the config files, some names resolve to "/"
+# This is a VERY BAD THING, so we kill the script if it happens
+# rather than accidentally overwrite the entire computer.
 
 THIS_DIR=$(dirname $0)
 
@@ -45,40 +54,13 @@ fi
 
 source $THIS_DIR/config.sh
 
-# $MCPIPE (defined in config.sh)  will be the input device for the server
-# instead of STDIN (the shell). Set permissions so that minecraft group can write to it
-if [ ! -p $MCPIPE ]; then
-  mkfifo $MCPIPE
-  chgrp minecraft $MCPIPE
-  chmod 664 $MCPIPE
-fi
+####==================#####
 
-# Make sure files are written to the right place (server writes to $(pwd))
-cd $SERVPATH
+echo "$@" > $MCPIPE &
 
-echo "Starting Minecraft Server..."
+#Maybe do some shenanigans here to detect when the MC server has been
+#silent for a while?
 
-# Start the server, reading from  $MCPIPENAME instead of standard in
-# This command is really complex...full explanation at the end
-java -Xmx${HEAPMEM} -Xms${HEAPMEM} -jar $SERVPATH/$JARNAME $STARTCOMMAND <> $MCPIPE > >(tee $OUTFILE) &
+# go run waitsilence.go -timeout 5s -command "$WAITCMD"
 
-# Record the PID of this process so that systemd can track it, then fork
-SERVER_PID=$!
-disown
-echo "Disowned MC Server"
-echo "$SERVER_PID" > $PIDFILE
-
-echo "Minecraft server initialization finished. Exiting setup script..."
 exit 0
-
-# DONE
-
-######################################
-
-# The first couple arguments are pretty simple: we start the server with java, using 'go' (for Sponge)
-# to make sure that dependencies are automagically installed. We then set the server to read from
-# the pipe we set up instead of STDIN, so that we can continue to feed the server commands even though
-# we are no longer attached to it. Send commands to the server by echoing the desired text to the pipe.
-# Pipe is opened in R/W mode to prevent blocking (see SO links)
-
-# http://stackoverflow.com/questions/179291/setting-up-pipelines-reading-from-named-pipes-without-blocking-in-bash
