@@ -3,4 +3,4 @@ Description=Cleans Minecraft Backups so they don't get out of control
 
 [Service]
 Type=simple
-ExecStart=SCRIPTDIR/prune_backups
+ExecStart=SCRIPTDIR/prune_backups.sh
