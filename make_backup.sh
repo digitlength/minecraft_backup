@@ -85,7 +85,7 @@ echo "save-off" > $MCPIPE
 WAITCMD="inotifywait -m -r $SERVPATH/$WORLD --exclude \"^./dynmap.*\" | grep -v ACCESS"
 
 printf "[WAITSILENCE] "
-go run waitsilence.go -timeout 5s -command "$WAITCMD"    # -verbose true #optional, enable for debugging
+go run $THIS_DIR/waitsilence.go -timeout 5s -command "$WAITCMD"    # -verbose true #optional, enable for debugging
 
 # Now that the server is done writing its save, we can back things up
 # Only back up the Nether and The End if they exist
