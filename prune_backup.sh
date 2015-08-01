@@ -71,7 +71,7 @@ done
 find $BKUPDIR/weekly/* -mtime +$RETAIN_WEEKLY 2> /dev/null | xargs /bin/rm -rf
 
 # Do we need to make a weekly backup?
-find $BKUPDIR/weekly/* -mtime +7 &> /dev/null  && echo "No need to make weekly backup yet." && exit 0
+find $BKUPDIR/weekly/* -mtime -7 &> /dev/null  && echo "No need to make weekly backup yet." && exit 0
 
 # Make weekly backup
 cd $BKUPDIR/daily
