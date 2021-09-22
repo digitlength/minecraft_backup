@@ -93,10 +93,10 @@ go run $THIS_DIR/waitsilence.go -timeout 5s -command "$WAITCMD"    # -verbose tr
 cd $SERVPATH
 
 tar -czf $TARGET_DIR/${WORLD}.${IDENTSTAMP}tar.gz $WORLD
-if [ -f "${WORLD}_nether" ]; then
+if [ -d "${WORLD}_nether" ]; then
   tar -czf $TARGET_DIR/${WORLD}_nether.${IDENTSTAMP}.tar.gz ${WORLD}_nether
 fi
-if [ -f "${WORLD}_the_end" ]; then
+if [ -d "${WORLD}_the_end" ]; then
   tar -czf $TARGET_DIR/${WORLD}_the_end.${IDENTSTAMP}.tar.gz ${WORLD}_the_end
 fi
 
